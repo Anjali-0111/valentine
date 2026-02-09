@@ -1,0 +1,10 @@
+Upload your photos here!
+
+Drag and drop 5 photos named:
+1.jpg
+2.jpg
+3.jpg
+4.jpg
+5.jpg
+
+These will appear as floating heart-shaped frames in the quiz.

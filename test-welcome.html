@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Screen Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/animations.css">
+</head>
+<body>
+    <main id="app" class="app-container">
+        <div class="screen welcome-screen">
+            <h1>Valentine Quiz 💕</h1>
+            <p class="text-center">A romantic journey just for you</p>
+            <button id="start-btn" class="pulse">Start Quiz</button>
+        </div>
+    </main>
+    <script>
+        // Test that button is properly sized for touch
+        document.addEventListener('DOMContentLoaded', () => {
+            const startBtn = document.getElementById('start-btn');
+            const rect = startBtn.getBoundingClientRect();
+            console.log('Button dimensions:', rect.width, 'x', rect.height);
+            console.log('Touch-friendly (44x44+):', rect.width >= 44 && rect.height >= 44);
+            
+            // Test click handler
+            startBtn.addEventListener('click', () => {
+                console.log('Start button clicked!');
+                alert('Welcome screen working! Button click detected.');
+            });
+        });
+    </script>
+</body>
+</html>
