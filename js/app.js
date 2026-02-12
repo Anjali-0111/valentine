@@ -15,12 +15,14 @@ class ValentineQuizApp {
     this.animationEngine = new AnimationEngine();
     this.appContainer = document.getElementById('app');
     this.noClickCount = 0; // Track No button click attempts
+    this.backgroundMusic = null; // Background music player
   }
 
   /**
    * Initialize the application
    */
   init() {
+    this.createBackgroundMusic();
     this.createFixedHearts();
     this.showWelcomeScreen();
     this.animationEngine.createFloatingHearts(document.body);
@@ -28,36 +30,63 @@ class ValentineQuizApp {
   }
 
   /**
+   * Create and setup background music
+   */
+  createBackgroundMusic() {
+    // Create audio element
+    this.backgroundMusic = document.createElement('audio');
+    this.backgroundMusic.src = './assets/a.mp3';
+    this.backgroundMusic.loop = true;
+    this.backgroundMusic.volume = 0.3; // Set volume to 30%
+    
+    // Try to autoplay (may be blocked by browser)
+    const playPromise = this.backgroundMusic.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay was prevented, play on first user interaction
+        const playOnInteraction = () => {
+          this.backgroundMusic.play();
+          document.removeEventListener('click', playOnInteraction);
+          document.removeEventListener('touchstart', playOnInteraction);
+        };
+        
+        document.addEventListener('click', playOnInteraction);
+        document.addEventListener('touchstart', playOnInteraction);
+      });
+    }
+  }
+
+  /**
    * Create fixed opening hearts across the page
    */
   createFixedHearts() {
-    // Create fixed heart-shaped photo frames with images
+    // Create romantic polaroid-style photo frames
     const heartsContainer = document.createElement('div');
     heartsContainer.className = 'fixed-hearts-container';
     heartsContainer.innerHTML = `
-      <div class="photo-heart heart-1">
-        <div class="heart-shape">
-          <img src="./assets/images/nidhi/1.jpg" alt="Memory 1" onerror="this.src='https://via.placeholder.com/150/FF69B4/FFFFFF?text=1'">
+      <div class="photo-polaroid polaroid-1">
+        <div class="polaroid-frame">
+          <img src="./assets/images/nidhi/1.jpg" alt="Memory 1" onerror="this.src='https://via.placeholder.com/150/FF69B4/FFFFFF?text=💕'">
+          <div class="polaroid-caption">Our First Moment 💕</div>
         </div>
       </div>
-      <div class="photo-heart heart-2">
-        <div class="heart-shape">
-          <img src="./assets/images/nidhi/2.jpg" alt="Memory 2" onerror="this.src='https://via.placeholder.com/150/FF1493/FFFFFF?text=2'">
+      <div class="photo-polaroid polaroid-2">
+        <div class="polaroid-frame">
+          <img src="./assets/images/nidhi/2.jpg" alt="Memory 2" onerror="this.src='https://via.placeholder.com/150/FF1493/FFFFFF?text=💖'">
+          <div class="polaroid-caption">Sweet Memories 💖</div>
         </div>
       </div>
-      <div class="photo-heart heart-3">
-        <div class="heart-shape">
-          <img src="./assets/images/nidhi/3.jpg" alt="Memory 3" onerror="this.src='https://via.placeholder.com/150/FFB6C1/FFFFFF?text=3'">
+      <div class="photo-polaroid polaroid-3">
+        <div class="polaroid-frame">
+          <img src="./assets/images/nidhi/3.jpg" alt="Memory 3" onerror="this.src='https://via.placeholder.com/150/FFB6C1/FFFFFF?text=💝'">
+          <div class="polaroid-caption">Forever Together 💝</div>
         </div>
       </div>
-      <div class="photo-heart heart-4">
-        <div class="heart-shape">
-          <img src="./assets/images/nidhi/4.jpg" alt="Memory 4" onerror="this.src='https://via.placeholder.com/150/FF69B4/FFFFFF?text=4'">
-        </div>
-      </div>
-      <div class="photo-heart heart-5">
-        <div class="heart-shape">
-          <img src="./assets/images/nidhi/5.jpg" alt="Memory 5" onerror="this.src='https://via.placeholder.com/150/FF1493/FFFFFF?text=5'">
+      <div class="photo-polaroid polaroid-4">
+        <div class="polaroid-frame">
+          <img src="./assets/images/nidhi/4.jpg" alt="Memory 4" onerror="this.src='https://via.placeholder.com/150/FF69B4/FFFFFF?text=❤️'">
+          <div class="polaroid-caption">Love You Always ❤️</div>
         </div>
       </div>
     `;
@@ -74,6 +103,8 @@ class ValentineQuizApp {
         this.startQuiz();
       } else if (e.target.id === 'restart-btn') {
         this.restartQuiz();
+      } else if (e.target.id === 'music-toggle' || e.target.closest('#music-toggle')) {
+        this.toggleMusic();
       } else if (e.target.classList.contains('option-button') || e.target.closest('.option-button')) {
         // Handle option button clicks (including clicks on child elements)
         const button = e.target.classList.contains('option-button') 
@@ -254,12 +285,16 @@ class ValentineQuizApp {
   showWelcomeScreen() {
     this.appContainer.innerHTML = `
       <div class="screen welcome-screen">
+        <button id="music-toggle" class="music-toggle" title="Toggle Music">
+          🎵
+        </button>
         <h1>Valentine Quiz 💕</h1>
         <p class="welcome-name">Hello, Robin!</p>
         <p class="text-center">A romantic journey just for you</p>
         <button id="start-btn" class="pulse">Start Quiz</button>
       </div>
     `;
+    this.addMusicToggle();
   }
 
   /**
@@ -298,6 +333,9 @@ class ValentineQuizApp {
     
     return `
       <div class="screen question-screen">
+        <button id="music-toggle" class="music-toggle ${this.backgroundMusic && !this.backgroundMusic.paused ? 'playing' : ''}" title="Toggle Music">
+          ${this.backgroundMusic && !this.backgroundMusic.paused ? '🎵' : '🔇'}
+        </button>
         <div class="progress-bar">
           <div class="progress-fill" style="width: ${((questionIndex + 1) / this.totalQuestions) * 100}%"></div>
         </div>
@@ -443,6 +481,9 @@ class ValentineQuizApp {
 
     this.appContainer.innerHTML = `
       <div class="screen results-screen">
+        <button id="music-toggle" class="music-toggle ${this.backgroundMusic && !this.backgroundMusic.paused ? 'playing' : ''}" title="Toggle Music">
+          ${this.backgroundMusic && !this.backgroundMusic.paused ? '🎵' : '🔇'}
+        </button>
         <h1>Your Score</h1>
         <div class="score-display">${totalScore}</div>
         <p class="score-message">${message}</p>
@@ -467,6 +508,39 @@ class ValentineQuizApp {
     this.score = 0;
     this.answers = [];
     this.showWelcomeScreen();
+  }
+
+  /**
+   * Toggle background music on/off
+   */
+  toggleMusic() {
+    if (!this.backgroundMusic) return;
+    
+    const musicToggle = document.getElementById('music-toggle');
+    if (!musicToggle) return;
+    
+    if (this.backgroundMusic.paused) {
+      this.backgroundMusic.play();
+      musicToggle.textContent = '🎵';
+      musicToggle.classList.add('playing');
+    } else {
+      this.backgroundMusic.pause();
+      musicToggle.textContent = '🔇';
+      musicToggle.classList.remove('playing');
+    }
+  }
+
+  /**
+   * Add music toggle button to current screen
+   */
+  addMusicToggle() {
+    const musicToggle = document.getElementById('music-toggle');
+    if (musicToggle && this.backgroundMusic) {
+      // Update button state based on music playing status
+      if (!this.backgroundMusic.paused) {
+        musicToggle.classList.add('playing');
+      }
+    }
   }
 
   /**

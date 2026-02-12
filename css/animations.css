@@ -215,153 +215,130 @@
   z-index: 0;
 }
 
-/* Gentle floating animation for photo hearts */
+/* Gentle floating animation for photo polaroids */
 @keyframes gentleFloat {
   0%, 100% {
-    transform: translateY(0) scale(1);
+    transform: translateY(0) rotate(var(--rotation));
   }
   50% {
-    transform: translateY(-10px) scale(1.05);
+    transform: translateY(-15px) rotate(var(--rotation));
   }
 }
 
-/* Position fixed photo hearts across the page */
-.photo-heart {
+/* Romantic polaroid-style photo frames */
+.photo-polaroid {
   position: absolute;
-  width: 120px;
-  height: 120px;
   animation: gentleFloat 4s ease-in-out infinite;
-}
-
-.photo-heart.heart-1 {
-  top: 8%;
-  left: 5%;
-  animation-delay: 0s;
-}
-
-.photo-heart.heart-2 {
-  top: 8%;
-  right: 5%;
-  animation-delay: 0.8s;
-}
-
-.photo-heart.heart-3 {
-  top: 50%;
-  left: 2%;
-  transform: translateY(-50%);
-  animation-delay: 1.6s;
-}
-
-.photo-heart.heart-4 {
-  top: 50%;
-  right: 2%;
-  transform: translateY(-50%);
-  animation-delay: 2.4s;
-}
-
-.photo-heart.heart-5 {
-  bottom: 8%;
-  left: 50%;
-  transform: translateX(-50%);
-  animation-delay: 3.2s;
-}
-
-.heart-shape {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  transform: rotate(-45deg);
-  background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
-  border-radius: 50% 50% 0 50%;
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(255, 20, 147, 0.6);
-  border: 4px solid #FFB6C1;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
   transition: all 0.3s ease;
 }
 
-.heart-shape:hover {
-  transform: rotate(-45deg) scale(1.1);
-  box-shadow: 0 8px 25px rgba(255, 20, 147, 0.8);
+.photo-polaroid:hover {
+  transform: scale(1.1) rotate(0deg) !important;
+  filter: drop-shadow(0 15px 30px rgba(255, 20, 147, 0.4));
+  z-index: 10;
 }
 
-.heart-shape::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: 0;
+.polaroid-frame {
+  background: white;
+  padding: 12px;
+  padding-bottom: 45px;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 140px;
+}
+
+.polaroid-frame img {
   width: 100%;
-  height: 100%;
-  background: inherit;
-  border-radius: 50%;
-}
-
-.heart-shape::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 100%;
-  height: 100%;
-  background: inherit;
-  border-radius: 50%;
-}
-
-.heart-shape img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 120%;
-  height: 120%;
+  height: 140px;
   object-fit: cover;
-  transform: translate(-50%, -50%) rotate(45deg);
-  z-index: 1;
+  display: block;
+  border-radius: 2px;
+}
+
+.polaroid-caption {
+  text-align: center;
+  font-family: 'Dancing Script', cursive;
+  font-size: 14px;
+  color: #FF1493;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+/* Position polaroids romantically across the page */
+.photo-polaroid.polaroid-1 {
+  top: 10%;
+  left: 8%;
+  --rotation: -8deg;
+  animation-delay: 0s;
+}
+
+.photo-polaroid.polaroid-2 {
+  top: 12%;
+  right: 8%;
+  --rotation: 6deg;
+  animation-delay: 0.8s;
+}
+
+.photo-polaroid.polaroid-3 {
+  bottom: 15%;
+  left: 10%;
+  --rotation: 5deg;
+  animation-delay: 1.6s;
+}
+
+.photo-polaroid.polaroid-4 {
+  bottom: 18%;
+  right: 10%;
+  --rotation: -7deg;
+  animation-delay: 2.4s;
 }
 
 /* Responsive sizing for mobile */
 @media (max-width: 768px) {
-  .photo-heart {
-    width: 80px;
-    height: 80px;
+  .polaroid-frame {
+    width: 100px;
+    padding: 8px;
+    padding-bottom: 35px;
   }
   
-  .heart-shape {
-    width: 80px;
-    height: 80px;
-    border: 3px solid #FFB6C1;
+  .polaroid-frame img {
+    height: 100px;
   }
   
-  .photo-heart.heart-1 {
+  .polaroid-caption {
+    font-size: 11px;
+    margin-top: 5px;
+  }
+  
+  .photo-polaroid.polaroid-1 {
     top: 5%;
     left: 3%;
   }
   
-  .photo-heart.heart-2 {
+  .photo-polaroid.polaroid-2 {
     top: 5%;
     right: 3%;
   }
   
-  .photo-heart.heart-3 {
-    top: 50%;
-    left: 1%;
+  .photo-polaroid.polaroid-3 {
+    bottom: 10%;
+    left: 5%;
   }
   
-  .photo-heart.heart-4 {
-    top: 50%;
-    right: 1%;
-  }
-  
-  .photo-heart.heart-5 {
-    bottom: 5%;
+  .photo-polaroid.polaroid-4 {
+    bottom: 10%;
+    right: 5%;
   }
 }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .photo-heart {
+  .photo-polaroid {
     animation: none;
   }
   
-  .heart-shape:hover {
-    transform: rotate(-45deg);
+  .photo-polaroid:hover {
+    transform: rotate(var(--rotation));
   }
 }
