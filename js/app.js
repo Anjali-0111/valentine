@@ -64,6 +64,7 @@ class ValentineQuizApp {
     // Create romantic polaroid-style photo frames
     const heartsContainer = document.createElement('div');
     heartsContainer.className = 'fixed-hearts-container';
+    heartsContainer.id = 'polaroid-container';
     heartsContainer.innerHTML = `
       <div class="photo-polaroid polaroid-1">
         <div class="polaroid-frame">
@@ -91,6 +92,26 @@ class ValentineQuizApp {
       </div>
     `;
     document.body.appendChild(heartsContainer);
+  }
+
+  /**
+   * Show polaroid images
+   */
+  showPolaroids() {
+    const container = document.getElementById('polaroid-container');
+    if (container) {
+      container.classList.remove('hidden');
+    }
+  }
+
+  /**
+   * Hide polaroid images
+   */
+  hidePolaroids() {
+    const container = document.getElementById('polaroid-container');
+    if (container) {
+      container.classList.add('hidden');
+    }
   }
 
   /**
@@ -295,6 +316,7 @@ class ValentineQuizApp {
       </div>
     `;
     this.addMusicToggle();
+    this.showPolaroids(); // Show polaroids on welcome screen
   }
 
   /**
@@ -304,6 +326,8 @@ class ValentineQuizApp {
     this.currentQuestion = 0;
     this.score = 0;
     this.answers = [];
+    
+    this.hidePolaroids(); // Hide polaroids during quiz
     
     // Get current screen for transition
     const currentScreen = this.appContainer.querySelector('.screen');
@@ -478,6 +502,8 @@ class ValentineQuizApp {
   showResults() {
     const totalScore = calculateTotalScore(this.answers);
     const message = getScoreMessage(totalScore, scoreMessages);
+
+    this.showPolaroids(); // Show polaroids on results screen
 
     this.appContainer.innerHTML = `
       <div class="screen results-screen">

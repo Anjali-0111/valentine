@@ -213,6 +213,13 @@
   height: 100%;
   pointer-events: none;
   z-index: 0;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.fixed-hearts-container.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Gentle floating animation for photo polaroids */
