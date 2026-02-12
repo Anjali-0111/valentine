@@ -32,47 +32,6 @@ export class AnimationEngine {
       container.appendChild(heart);
       this.hearts.push(heart);
     }
-
-    // Create photo hearts with Nidhi's images
-    this.createPhotoHearts(container);
-  }
-
-  /**
-   * Create floating photo hearts with images
-   * @param {HTMLElement} container - Container element for photo hearts
-   */
-  createPhotoHearts(container) {
-    const photoCount = Math.min(CONFIG.animations.photoHeartCount, CONFIG.nidhiPhotos.length);
-    
-    for (let i = 0; i < photoCount; i++) {
-      const photoHeart = document.createElement('div');
-      photoHeart.className = 'floating-heart photo-heart';
-      
-      // Create heart-shaped container with image
-      const heartShape = document.createElement('div');
-      heartShape.className = 'heart-shape';
-      
-      const img = document.createElement('img');
-      img.src = CONFIG.nidhiPhotos[i];
-      img.alt = `Nidhi photo ${i + 1}`;
-      img.loading = 'lazy';
-      
-      // Handle image load errors gracefully
-      img.onerror = () => {
-        photoHeart.style.display = 'none';
-      };
-      
-      heartShape.appendChild(img);
-      photoHeart.appendChild(heartShape);
-      
-      // Random positioning and animation
-      photoHeart.style.left = `${randomBetween(0, 100)}%`;
-      photoHeart.style.animationDuration = `${randomBetween(4000, 8000)}ms`;
-      photoHeart.style.animationDelay = `${randomBetween(0, 4000)}ms`;
-      
-      container.appendChild(photoHeart);
-      this.hearts.push(photoHeart);
-    }
   }
 
   /**

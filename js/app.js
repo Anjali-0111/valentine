@@ -37,7 +37,7 @@ class ValentineQuizApp {
     heartsContainer.innerHTML = `
       <div class="photo-heart heart-1">
         <div class="heart-shape">
-          <img src="./assets/images/nidhi/1.JPG" alt="Memory 1" onerror="this.src='https://via.placeholder.com/150/FF69B4/FFFFFF?text=1'">
+          <img src="./assets/images/nidhi/1.jpg" alt="Memory 1" onerror="this.src='https://via.placeholder.com/150/FF69B4/FFFFFF?text=1'">
         </div>
       </div>
       <div class="photo-heart heart-2">
@@ -52,12 +52,12 @@ class ValentineQuizApp {
       </div>
       <div class="photo-heart heart-4">
         <div class="heart-shape">
-          <img src="./assets/images/nidhi/4.JPG" alt="Memory 4" onerror="this.src='https://via.placeholder.com/150/FF69B4/FFFFFF?text=4'">
+          <img src="./assets/images/nidhi/4.jpg" alt="Memory 4" onerror="this.src='https://via.placeholder.com/150/FF69B4/FFFFFF?text=4'">
         </div>
       </div>
       <div class="photo-heart heart-5">
         <div class="heart-shape">
-          <img src="./assets/images/nidhi/5.JPG" alt="Memory 5" onerror="this.src='https://via.placeholder.com/150/FF1493/FFFFFF?text=5'">
+          <img src="./assets/images/nidhi/5.jpg" alt="Memory 5" onerror="this.src='https://via.placeholder.com/150/FF1493/FFFFFF?text=5'">
         </div>
       </div>
     `;
